@@ -5,12 +5,14 @@ use crate::conwertor::BMP::bmp_conversion::convert_bmp;
 use crate::conwertor::JPG::jpg_conversion::convert_jpg;
 use crate::conwertor::PNG::png_conversion::convert_png;
 
-pub fn currency_exchange() {
-        let input: Vec<String> = Vec::new();
+pub fn currency_exchange(input_file: String) {
+
+    let input: Vec<String> = Vec::new();
 
 
     let mut vec = input;
-    vec.push("input.jpg".to_string());
+
+    vec.push(input_file.to_string());
 
 
 
