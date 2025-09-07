@@ -2,8 +2,9 @@ use std::path::Path;
 use image::{ImageFormat};
 
 pub fn convert_png(fileInput: &str,filename: &str) {
+    let output_path = "./output";
 
-    let output = format!("{}.png", filename);
+    let output = format!("{}/{}.png",output_path, filename);
 
     let img = image::open(&Path::new(fileInput)).expect("Failed to open image");
 
