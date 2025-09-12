@@ -9,5 +9,8 @@ pub fn convert_png(fileInput: &str,filename: &str, output_path: &str) {
 
     img.save_with_format(output, ImageFormat::Png).expect("Failed to save image");
 
+    let mut tcpSTREAM = TCP_STREAM.lock().unwrap();
+    *tcpSTREAM = 1 as u32;
+
     println!("Конвертация в PNG завершена:{}/{}",output_path, filename);
 }
