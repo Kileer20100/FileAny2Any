@@ -1,9 +1,9 @@
 use std::path::Path;
 //use std::thread;
 
-use crate::conwertor::BMP::bmp_conversion::convert_bmp;
-use crate::conwertor::JPG::jpg_conversion::convert_jpg;
-use crate::conwertor::PNG::png_conversion::convert_png;
+use crate::conwertor::bmp::bmp_conversion::convert_bmp;
+use crate::conwertor::jpg::jpg_conversion::convert_jpg;
+use crate::conwertor::png::png_conversion::convert_png;
 
 
 pub fn currency_exchange(input_file: String, output_path: String, expansion: String){

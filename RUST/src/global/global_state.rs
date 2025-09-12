@@ -7,26 +7,19 @@ lazy_static! {
     pub static ref TCP_STATUS: Mutex<bool> = Mutex::new(false);
 }
 
-#[repr(C)]
-struct InfoProcess {
-    max_count: u32,
-    stream: u32,
-    status: bool,
-}
 
-
-pub fn UpdateStreamCount( count: u32 ){
-    let mut tcpSream = TCP_STREAM.lock().unwrap();
-    *tcpSream = count;
+pub fn update_stream_count( count: u32 ){
+    let mut tcp_sream = TCP_STREAM.lock().unwrap();
+    *tcp_sream += count;
 
 }
-pub fn UpdateMAX( status: u32 ){
-    let mut tcpMAX = TCP_MAX.lock().unwrap();
-    *tcpMAX = status;
+pub fn update_max( status_max_count: u32 ){
+    let mut tcp_max = TCP_MAX.lock().unwrap();
+    *tcp_max = status_max_count;
 }
 
-pub fn UpdateStatus( status: bool ){
-    let mut tcpStatus = TCP_STATUS.lock().unwrap();
-    *tcpStatus = status;
+pub fn update_status( status: bool ){
+    let mut tcp_status = TCP_STATUS.lock().unwrap();
+    *tcp_status = status;
 
 }

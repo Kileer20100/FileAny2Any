@@ -1,10 +1,6 @@
-use std::ffi::{CStr, CString};
+use std::ffi::{CStr};
 use std::os::raw::c_char;
-use rayon::{prelude::*, str};
-use std::net::TcpStream;
-use std::io::Write;
-use std::sync::Mutex;
-use lazy_static::lazy_static;
+use rayon::{prelude::*};
 
 mod conwertor;
 mod dir;
@@ -13,14 +9,8 @@ mod global;
 
 use crate::conwertor::currency_exchange::currency_exchange;
 use crate::dir::search::serch_dir::serch_dir;
-use crate::global::global_state::{ UpdateStreamCount, UpdateMAX, UpdateStatus, TCP_STATUS, TCP_STREAM, TCP_MAX};
+use crate::global::global_state::{ update_max, update_status, TCP_STATUS, TCP_STREAM, TCP_MAX};
 
-#[repr(C)]
-struct InfoProcess {
-    max_count: u32,
-    stream: u32,
-    status: bool,
-}
 
 #[unsafe(no_mangle)]
 pub extern "C" fn StartConwert(
@@ -42,7 +32,7 @@ pub extern "C" fn StartConwert(
         CStr::from_ptr(expansion).to_str().unwrap_or("")
     };
 
-    UpdateStatus(true);
+    update_status(true);
 
     println!("Input Path: {}", input_path);
     println!("Output Path: {}", output_path);
@@ -56,7 +46,7 @@ pub extern "C" fn StartConwert(
         Err(_) => return 0,
     };
 
-    UpdateMAX(file_list.len() as u32);
+    update_max(file_list.len() as u32);
 
 
     // Обработка файлов параллельно
@@ -69,15 +59,19 @@ pub extern "C" fn StartConwert(
 
 
 #[unsafe(no_mangle)]
-pub extern "C" fn InfoProcessTSP() -> InfoProcess{
-
+pub extern "C" fn InfoMAXProcess() -> u32{
     let tcp_max = TCP_MAX.lock().unwrap();
-    let tcp_stream = TCP_STREAM.lock().unwrap();
-    let tcp_status = TCP_STATUS.lock().unwrap();
+    tcp_max.clone()
+}
 
-    InfoProcess{
-        max_count: *tcp_max,
-        stream: *tcp_stream,
-        status: *tcp_status,
-    }
+#[unsafe(no_mangle)]
+pub extern "C" fn InfoStreamProcess() -> u32{
+    let tcp_stream = TCP_STREAM.lock().unwrap();
+    tcp_stream.clone()
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn InfoProcessTSP() -> bool{
+    let tcp_status = TCP_STATUS.lock().unwrap();
+    tcp_status.clone()
 }

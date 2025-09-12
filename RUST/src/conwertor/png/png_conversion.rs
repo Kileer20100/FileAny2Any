@@ -1,16 +1,16 @@
 use std::path::Path;
 use image::{ImageFormat};
+use crate::global::global_state::{update_stream_count};
 
-pub fn convert_png(fileInput: &str,filename: &str, output_path: &str) {
+pub fn convert_png(file_input: &str,filename: &str, output_path: &str) {
 
     let output = format!("{}/{}.png",output_path, filename);
 
-    let img = image::open(&Path::new(fileInput)).expect("Failed to open image");
+    let img = image::open(&Path::new(file_input)).expect("Failed to open image");
 
     img.save_with_format(output, ImageFormat::Png).expect("Failed to save image");
 
-    let mut tcpSTREAM = TCP_STREAM.lock().unwrap();
-    *tcpSTREAM = 1 as u32;
+    update_stream_count(1 as u32);
 
     println!("Конвертация в PNG завершена:{}/{}",output_path, filename);
 }

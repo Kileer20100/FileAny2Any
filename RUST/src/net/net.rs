@@ -1,6 +1,5 @@
-use std::net::TcpStream;
+/*use std::net::TcpStream;
 use std::io::Write;
-use rayon::str::ParallelString;
 use serde_json::json;
 
 pub fn send_progress(value: i32, message: &str) -> std::io::Result<()> {
@@ -28,4 +27,4 @@ pub fn send_progress_start(value: i32, message: &str) -> std::io::Result<()> {
     println!("Connected to server, sending progress...");
 
     Ok(())
-}
+}*/
